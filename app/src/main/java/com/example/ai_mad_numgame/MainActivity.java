@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         int[][]dataFrame=dataPrep(); //dataPrep function returns a two-dimenssional array
         double slope=LR.getSlope(dataFrame); //LR class, which provides slope on invoking getSlope
         new AlertDialog.Builder(this)
-                // .setIcon() //your custom icon
+               // .setIcon() //your custom icon
                 .setTitle("Performance")
 
                 .setMessage(getInterpretation(dataFrame,slope))
@@ -70,48 +70,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newMatch() {  //A game is composed of three matches
-        int correctAns = -100;
-        int operand1 = random.nextInt(20);
-        int operand2=random.nextInt(10);
+
+        int operand1 = random.nextInt(10);
+        int operand2=0;
         //check is operand2 is not zero; otherwise in case of division-divide by zero error will come
         String operator = operators[random.nextInt(4)];
         textView2.setText(operand1 + operator + operand2);
-        if (operator.equals("+"))
-            correctAns = operand1 + operand2;
-        else if (operator.equals("-"))
-            correctAns = operand1 - operand2;
-        else if (operator.equals("/"))
-            correctAns = operand1/operand2;
-        else
-            correctAns = operand1*operand2;
-        // Your code here, to diplay correct and incorrect options on the buttons
-        correctButton = random.nextInt(4);
-        if (correctButton == 0){
-            button1.setText(correctAns+ "");
-            button2.setText(correctAns -1 + "");
-            button3.setText(correctAns-2+"");
-            button4.setText(correctAns+3+ "");
-        }
-        else if (correctButton == 1){
-            button1.setText(correctAns-1 + "");
-            button2.setText(correctAns+ "");
-            button3.setText(correctAns-2+ "");
-            button4.setText(correctAns+2 + "");
-        }
 
-        else if (correctAns == 2){
-            button1.setText(correctAns-2+ "");
-            button2.setText(correctAns+1+ "");
-            button3.setText(correctAns+ "");
-            button4.setText(correctAns+2+ "");
-        }
-        else{
-            button1.setText(correctAns-2+ "");
-            button2.setText(correctAns+3+"");
-            button3.setText(correctAns-1+"");
-            button4.setText(correctAns+ "");
-        }
-        if(matchCounter==3){    // if three matches are completed updatee the perfomrance in sharedpreferences
+      // Your code here, to display correct and incorrect options on the buttons
+
+        if(matchCounter==3){    // if three matches are completed update the performance in sharedpreferences
 
             matchCounter=0;
 
@@ -127,17 +95,14 @@ public class MainActivity extends AppCompatActivity {
     public int sumOfScore(){
         //Computing the sum of score array, which has the 1 or in each index,depending on correct or incorrect answers
         int sum=0;
-        // your code here
-        for(int i = 0; i < score.length; i++){
-            sum = sum + score[i];
-        }
+       // your code here
         return sum;
     }
 
     public int[][] dataPrep() {
         int[] data = new Gson().fromJson((sharedPreferences.getString("data", null)), performance.getClass());
         Log.i("data", Arrays.toString(data)); //this is how you display arrays in Logcat, for debugging
-        int dataFrame[][] = new int[6][2]; //creating a dataframe of two columns and six rows for regresson purpose
+        int dataFrame[][] = new int[6][2]; //creating a dataframe of two columns and six rows for regression purpose
         if(data==null)
             return null;
         for (int i = 0; i < data.length; i++) {
@@ -148,20 +113,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String getInterpretation(int [][]dataFrame,double slope){
-        //provide interpretation based on your slope analysis
+       //provide interpretation based on your slope analysis
         // Your code here
-        slope = LR.getSlope(dataFrame);
-        String interpretation = "Default Interpretation";
-        if(slope > 0 && slope <=0.5)
-            interpretation = "You are slow learner";
-        else if(slope > 0.5)
-            interpretation = "Your are good learner";
-        else if(slope < 0)
-            interpretation = "You are not learner";
-        else if(dataFrame[0][1] == 3 && slope == 0){
-            interpretation = "You achieve perfection";
-        }else if(dataFrame[0][1] == 0 && slope == 0)
-            interpretation = "You do no learn";
-        return interpretation;
+        return "Your Interpretation";
     }
 }
